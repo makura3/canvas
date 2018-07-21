@@ -20,7 +20,7 @@
 
           function click_handler(e) {
             let point = _this.get_event_point(e.clientX, e.clientY);
-            _this.RectRender(point.x, point.y, 100, 100); 
+            _this.pathRender(point.x, point.y, 100, 100); 
           }
         }
 
@@ -33,11 +33,25 @@
         }
 
         // render
-        Settings.prototype.RectRender = (x, y, w, h) => {
+        Settings.prototype.pathRender = (x, y, w, h) => {
           let _this = this;
-          // var ctx = this.context;
-          // ctx.beginPath();
-          _this.context.fillRect(x-50, y-50, w, h);
+          var ctx = _this.context;
+
+          // 三角形 これもうちょっときれいに書けないかな
+          ctx.beginPath();
+          ctx.moveTo(x, y-50); // 一点目
+          ctx.lineTo(x+40, y+25); // 二点目
+          ctx.lineTo(x-40, y+25); // 三点目
+          ctx.closePath();
+          ctx.strokeStyle = '#FFF'; // 枠線の色
+          ctx.stroke();
+          
+          // ctx.fillRect(x-50, y-50, w, h); //四角形
+        }
+
+        // animation
+        Settings.prototype.setAnimation = () => {
+          // settimeoutでそのうち書く
         }
       })
   
