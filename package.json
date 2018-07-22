@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/makura3/canvas#readme",
   "dependencies": {
+    "@createjs/easeljs": "^2.0.0-beta.2",
+    "@createjs/tweenjs": "^2.0.0-beta.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",

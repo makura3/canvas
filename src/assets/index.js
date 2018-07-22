@@ -1,60 +1,29 @@
-(function () {
-  const win = window,
-      doc = document,
-      Settings = (function() {
-        Settings.prototype.init = () => {
-          this.canvas_init()
-          this.event_set_handler()
-        };
-        
-        // init
-        Settings.prototype.canvas_init = () => {
-          this.canvas = doc.getElementById('canvas')
-          this.context = this.canvas.getContext('2d')
-        }
+// EaselJS系の読み込み
+import { Shape, Stage } from '@createjs/easeljs/dist/easeljs.module';
+// TweenJS系の読み込み
+import { Tween } from '@createjs/tweenjs/dist/tweenjs.module';
 
-        // event set
-        Settings.prototype.event_set_handler = () => {
-          let _this = this
-          this.canvas.addEventListener('click', click_handler)
+const stage = new Stage('canvas');
 
-          function click_handler(e) {
-            let point = _this.get_event_point(e.clientX, e.clientY);
-            _this.pathRender(point.x, point.y, 100, 100); 
-          }
-        }
+const target = new Shape();
+target.graphics.beginFill('#FFF');
+target.graphics.drawPolyStar(0, 0, 20, 3);
+stage.addChild(target);
 
-        // get event point
-        Settings.prototype.get_event_point = (client_X, client_Y) => {
-          return {
-              x: client_X - this.canvas.getBoundingClientRect().left,
-              y: client_Y - this.canvas.getBoundingClientRect().top
-          }
-        }
+target.x = 100;
+target.y = 100;
 
-        // render
-        Settings.prototype.pathRender = (x, y, w, h) => {
-          let _this = this;
-          var ctx = _this.context;
+Tween.get(target, {loop: true})
+  .wait(300)
+  .to({x: 740, y: 400, scale: 2}, 700)
+  .to({x: 400, y: 0, scale: 1.4}, 1200)
+  .to({x: 500, y: 300, scale: 3}, 1200)
+  .to({x: 100, y: 100, scale: 1}, 700);
 
-          // 三角形 これもうちょっときれいに書けないかな
-          ctx.beginPath();
-          ctx.moveTo(x, y-50); // 一点目
-          ctx.lineTo(x+40, y+25); // 二点目
-          ctx.lineTo(x-40, y+25); // 三点目
-          ctx.closePath();
-          ctx.strokeStyle = '#FFF'; // 枠線の色
-          ctx.stroke();
-          
-          // ctx.fillRect(x-50, y-50, w, h); //四角形
-        }
+update();
 
-        // animation
-        Settings.prototype.setAnimation = () => {
-          // settimeoutでそのうち書く
-        }
-      })
-  
-  const setting = new Settings();
-  setting.init();
-})(window);
+// 毎フレームステージを自動更新する
+function update() {
+  stage.update();
+  requestAnimationFrame(() => update());
+}
