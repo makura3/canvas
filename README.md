@@ -1,3 +1,4 @@
 ## Usage
 
-npx webpack-serve
+npx webpack-serve  
+HMR対応しています。
